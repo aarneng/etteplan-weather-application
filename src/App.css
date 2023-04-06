@@ -1,0 +1,60 @@
+:root {
+  /*
+    Here we define all the contants required for the app.
+    This includes the color scheme and font sizes.
+  */
+  --topbar-color: #00A5E5;
+  --app-background-color: #FFFFFF;
+  --weather-display-background-color: #F8F9FA;
+  --weather-border-color: #E6E6E6;
+  --more-info-background-color: #E5F6FD;
+  --font-color-dark: #262626;
+  --font-color-light: #70757A;
+  --font-size-header: 23pt;
+  --font-size-dropdown: 13pt;
+  --font-size-maincity: 19pt;
+  --font-size-weather-text: 13pt;
+  --font-size-temperature-now: 26pt;
+  --font-size-date: 15pt;
+  --font-size-time-now: 13pt;
+  --font-size-weather-moreinfo-now: 13pt;
+  --font-size-futuretime: 13pt;
+  --font-size-temperature-future: 15pt;
+  --font-size-weather-moreinfo-future: 10pt;
+  --topbar-height: 30px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body {
+  font-family: 'Arial Regular';
+  margin: 0;
+}
+
+.topbar {
+  background-color: var(--topbar-color);
+  height: var(--topbar-height);
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  top: 0;
+}
+
+.main {
+  background-color: var(--app-background-color);
+  color: var(--font-color-dark);
+  margin-top: var(--topbar-height);
+}
+
+h1 {
+  font-size: var(--font-size-header);
+  font-weight: 500;
+}
+
+.dropdown {
+  font-size: var(--font-size-dropdown);
+}

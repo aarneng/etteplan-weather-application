@@ -1,0 +1,9 @@
+# dependencies
+/node_modules
+.env
+
+
+# our fake data, used for dev purposes
+# simply a local copy of API call
+/public/fakeDataNow.json
+/public/fakeDataFuture.json
