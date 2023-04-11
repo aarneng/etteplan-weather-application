@@ -11,14 +11,17 @@ function App() {
         <div>
             <Navbar />
             <div className="main">
-                <Weather
-                    get_weather={
-                        process.env.NODE_ENV === "development" ?
-                            weatherService.get_weather_fake :
-                            weatherService.get_weather
-                    }
-                    set_location={weatherService.set_location}
-                />
+                <div className="container">
+                    <h1>Säätutka</h1>
+                    <Weather
+                        get_weather={
+                            process.env.NODE_ENV === "development" ?
+                                weatherService.get_weather_fake :
+                                weatherService.get_weather
+                        }
+                        set_location={weatherService.set_location}
+                    />
+                </div>
             </div>
         </div>
     );

@@ -47,15 +47,14 @@ export default function Weather({ get_weather, set_location }) {
                     locations[value].lon
                 )
                 let weather = await get_weather()
-                setCities([<City key={value} weatherData={weather} cityName={value} />])
+                setCities([<City key={value} weatherData={weather} />])
             }
         }
     }
     return (
-        <div className="container">
-            <h1>Säätutka</h1>
+        <div className="weather-view">
             <form>
-                <select id="citySelector" defaultValue={"DEFAULT"} onChange={(e) => cityComponents(e.target.value)}>
+                <select id="citySelector" defaultValue={"DEFAULT"} onChange={(e) => cityComponents(e.target.value)}  className="dropdown">
                     <option value="DEFAULT" disabled>Valitse kaupunki ...</option>
                     <option value="all"      >Kaikki kaupungit</option>
                     <option value="Tampere"  >Tampere</option>
@@ -64,7 +63,9 @@ export default function Weather({ get_weather, set_location }) {
                     <option value="Espoo"    >Espoo</option>
                 </select>
             </form>
-            {cities}
+            <div className="city-container">
+                {cities}
+            </div>
         </div>
     )
 }
