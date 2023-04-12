@@ -24,6 +24,10 @@
             "^get_"
         ]}],
         "react/prop-types": "off",
-        "space-before-function-paren": ["error", "never"]
+        "space-before-function-paren": ["error", {
+            "anonymous": "ignore", 
+            "named": "never", 
+            "asyncArrow": "ignore"
+        }]
     }
 }

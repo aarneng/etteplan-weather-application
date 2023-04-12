@@ -19,7 +19,7 @@ const set_location = (new_lat, new_lon) => {
     return 1
 }
 
-const get_weather = async() => {
+const get_weather = async () => {
     if (!api_key) {
         return "No API key set, cannot get weather"
     }
@@ -52,14 +52,21 @@ const get_weather = async() => {
     }
 }
 
-const get_weather_fake = async() => {
-    const responseNow = await axios.get("./fakeDataNow.json")
-    const responseFuture = await axios.get("./fakeDataFuture.json")
-
-    return {
-        now: responseNow.data,
-        future: responseFuture.data
+const get_weather_fake = async () => {
+    try {
+        const responseNow = await axios.get("./fakeDataNow.json")
+        const responseFuture = await axios.get("./fakeDataFuture.json")
+        return {
+            now: responseNow.data,
+            future: responseFuture.data
+        }
+    } catch (e) {
+        if (e.code === "ERR_BAD_REQUEST") {
+            return get_weather()
+        }
     }
+
+    return null
 }
 
 const exported = {
