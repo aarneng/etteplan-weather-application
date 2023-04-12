@@ -1,12 +1,12 @@
+/* eslint camelcase: 0 */
 
 import axios from "axios"
 let lat = 60.25
-let lon = 24.6667  // default to Espoo office
+let lon = 24.6667 // default to Espoo office
 let api_key = null
-let count = 6
-// only request the weather for 5 future times. 
+const count = 6
+// only request the weather for 5 future times.
 // Here, we use count = 6 as the first one might have already happened
-
 
 const set_api_key = key => {
     api_key = key
@@ -19,7 +19,7 @@ const set_location = (new_lat, new_lon) => {
     return 1
 }
 
-const get_weather = async () => {
+const get_weather = async() => {
     if (!api_key) {
         return "No API key set, cannot get weather"
     }
@@ -30,7 +30,7 @@ const get_weather = async () => {
         lon=${lon}&
         appid=${api_key}
     `
-    urlWeatherNow = urlWeatherNow.replace(/\s+/g, '')
+    urlWeatherNow = urlWeatherNow.replace(/\s+/g, "")
     // remove whitespace caused by template literal
 
     let urlWeatherFuture = `
@@ -40,13 +40,11 @@ const get_weather = async () => {
         cnt=${count}&
         appid=${api_key}
     `
-    urlWeatherFuture = urlWeatherFuture.replace(/\s+/g, '')
+    urlWeatherFuture = urlWeatherFuture.replace(/\s+/g, "")
     // remove whitespace caused by template literal
 
     const responseNow = await axios.post(urlWeatherNow)
     const responseFuture = await axios.post(urlWeatherFuture)
-
-    console.log(responseNow.data)
 
     return {
         now: responseNow.data,
@@ -54,7 +52,7 @@ const get_weather = async () => {
     }
 }
 
-const get_weather_fake = async () => {
+const get_weather_fake = async() => {
     const responseNow = await axios.get("./fakeDataNow.json")
     const responseFuture = await axios.get("./fakeDataFuture.json")
 

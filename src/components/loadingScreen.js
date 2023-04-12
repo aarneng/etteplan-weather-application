@@ -1,12 +1,12 @@
 import "../App.css"
-
+import React from "react"
 
 export default function LoadingScreen() {
     /*
-    
+
     Copied from Jon Kantner's codepen:
     https://codepen.io/jkantner/pen/mdKOpbe
-    
+
     */
     return (
         <svg className="ip" viewBox="0 0 256 128" width="256px" height="128px" xmlns="http://www.w3.org/2000/svg">

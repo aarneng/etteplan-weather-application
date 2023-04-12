@@ -1,3 +1,4 @@
+import React from "react"
 
 export default function CityWeather({ weatherData, cityName }) {
     // main UI for weather
@@ -15,29 +16,25 @@ function CityNow({ weatherData, cityName }) {
     // UI for a viewing a city's current weather (more info)
 
     // define constants and such below
-    let date = new Date(weatherData.dt * 1000)
-    let mm = date.toString().split(" ")[1]
-    let dd = date.toString().split(" ")[2]
-    let ending = dd.slice(-2)
+    const date = new Date(weatherData.dt * 1000)
+    const mm = date.toString().split(" ")[1]
+    const dd = date.toString().split(" ")[2]
+    const ending = dd.slice(-2)
     let suffix = null
     if (["11", "12", "13"].includes(ending)) {
         suffix = "th"
-    }
-    else if (dd.endsWith("1")) {
+    } else if (dd.endsWith("1")) {
         suffix = "st"
-    }
-    else if (dd.endsWith("2")) {
+    } else if (dd.endsWith("2")) {
         suffix = "nd"
-    }
-    else if (dd.endsWith("3")) {
+    } else if (dd.endsWith("3")) {
         suffix = "rd"
-    }
-    else {
+    } else {
         suffix = "th"
     }
 
     let rainDuration
-    let rainFound = weatherData.rain
+    const rainFound = weatherData.rain
     if (rainFound) {
         // only set a value if there is rain to not cause an exception
         rainDuration = Object.keys(weatherData.rain)[0]
@@ -73,9 +70,9 @@ function CityNow({ weatherData, cityName }) {
                 Wind: {Math.round(10 * weatherData.wind.speed) / 10} m/s<br />
                 Humidity: {weatherData.main.humidity}%<br />
                 {
-                    rainFound ?
-                        "Precipitation (" + rainDuration + "): " + Math.round(weatherData.rain[rainDuration]) + " mm" :
-                        "Precipitation (1h): 0 mm"
+                    rainFound
+                        ? "Precipitation (" + rainDuration + "): " + Math.round(weatherData.rain[rainDuration]) + " mm"
+                        : "Precipitation (1h): 0 mm"
                 }
             </div>
         </div>
@@ -91,7 +88,7 @@ function CityFuture({ weatherData, tNow }) {
         // remove first elem if it's in the past
         l.shift()
     }
-    let len = 5
+    const len = 5
     l = l.concat(Array(len).fill(null)).slice(0, len)
     // pad with null to ensure min. length of 5, then cut lenth to 5
     return (
@@ -104,33 +101,35 @@ function CityFuture({ weatherData, tNow }) {
 function CityFutureElem({ weatherData }) {
     // small future weather UI component
 
-    if (weatherData === null) return (
-        // If the data is empty, display an error (just in case)
-        <div className="future-child">
-            <div className="future-top">
-                <div className="future-time">
-                    no data
+    if (weatherData === null) {
+        return (
+            // If the data is empty, display an error (just in case)
+            <div className="future-child">
+                <div className="future-top">
+                    <div className="future-time">
+                        no data
+                    </div>
+                    <img
+                        src={"./error.png"}
+                        className="img-weather-future"
+                        alt="weather-type-img"
+                    />
+                    <div className="future-temp">
+                        N/A
+                    </div>
                 </div>
-                <img
-                    src={`./error.png`}
-                    className="img-weather-future"
-                    alt="weather-type-img"
-                />
-                <div className="future-temp">
+                <div className="future-bottom">
+                    N/A<br />
+                    N/A<br />
                     N/A
                 </div>
             </div>
-            <div className="future-bottom">
-                N/A<br />
-                N/A<br />
-                N/A
-            </div>
-        </div>
-    )
-    let time = new Date(weatherData.dt * 1000)
+        )
+    }
+    const time = new Date(weatherData.dt * 1000)
 
     let rainDuration
-    let rainFound = weatherData.rain
+    const rainFound = weatherData.rain
     if (rainFound) {
         // only set a value if there is rain to not cause an exception
         rainDuration = Object.keys(weatherData.rain)[0]
@@ -157,9 +156,9 @@ function CityFutureElem({ weatherData }) {
                 {Math.round(10 * weatherData.wind.speed) / 10} m/s<br />
                 {weatherData.main.humidity}%<br />
                 {
-                    rainFound ?
-                        Math.round(weatherData.rain[rainDuration]) + " mm" :
-                        "0 mm"
+                    rainFound
+                        ? Math.round(weatherData.rain[rainDuration]) + " mm"
+                        : "0 mm"
                 }
             </div>
         </div>
@@ -167,5 +166,5 @@ function CityFutureElem({ weatherData }) {
 }
 
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1)
 }

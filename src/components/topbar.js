@@ -1,5 +1,5 @@
 import "../App.css"
-
+import React from "react"
 
 export default function Navbar() {
     return (
@@ -7,5 +7,3 @@ export default function Navbar() {
         </div>
     )
 }
-
-
