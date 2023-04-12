@@ -16,7 +16,7 @@ function App() {
                     {/*
                         The  line below renders the main UI of the application.
                         It is currently set up to load a local copy of an OWM API request
-                        while in development mode. You can change the conditional
+                        while in development mode (if possible). You can change the conditional
                         below if you want to always load data from the API
                     */}
                     <MainView
