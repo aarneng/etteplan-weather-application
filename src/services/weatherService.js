@@ -6,7 +6,7 @@ let api_key = null
 let count = 6
 // only request the weather for 5 future times. 
 // Here, we use count = 6 as the first one might have already happened
-let units = "metric"
+
 
 const set_api_key = key => {
     api_key = key
@@ -20,7 +20,7 @@ const set_location = (new_lat, new_lon) => {
 }
 
 const get_weather = async () => {
-    if (api_key == null) {
+    if (!api_key) {
         return "No API key set, cannot get weather"
     }
 
@@ -38,7 +38,6 @@ const get_weather = async () => {
         lat=${lat}&
         lon=${lon}&
         cnt=${count}&
-        units=${units}&
         appid=${api_key}
     `
     urlWeatherFuture = urlWeatherFuture.replace(/\s+/g, '')
@@ -48,7 +47,6 @@ const get_weather = async () => {
     const responseFuture = await axios.post(urlWeatherFuture)
 
     console.log(responseNow.data)
-    console.log(responseFuture.data)
 
     return {
         now: responseNow.data,

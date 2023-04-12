@@ -1,8 +1,11 @@
 import "../App.css"
 import { useState } from "react"
-import City from "./city"
+import CityWeather from "./cityWeather"
+import LoadingScreen from "./loadingScreen"
 
 let locations = {
+    // define locations as constants
+    // if there were many, they should probably be in a separate .json
     Tampere: {
         lat: 61.4991,
         lon: 23.7871
@@ -21,25 +24,42 @@ let locations = {
     }
 }
 
-export default function Weather({ get_weather, set_location }) {
-    let [cities, setCities] = useState([])
+export default function MainView({ get_weather, set_location }) {
+    /*
+    
+    Main component for out app, with dropdown selector and weather UI
+    
+    */
+    const [loading, setLoading] = useState(false)
+    const [cities, setCities] = useState([])
+
+    function setCitiesHelper(newCities) {
+        // helper function which allows to set loading state to false
+        setCities(newCities)
+        setLoading(false)
+    }
+
     async function cityComponents(value) {
+        setLoading(true)
         switch (value) {
             case "all": {
-                setCities(
+                // this implementation assumes we have a reasonable amount of cities. (max. ~50)
+                // If there are many, it should probably be re-written to not load *everything* at once
+                setCitiesHelper(
                     await Promise.all(Object.keys(locations).map(async (item) => {
                         set_location(
                             locations[item].lat,
                             locations[item].lon
                         )
                         let weather = await get_weather()
-                        return <City key={item} weatherData={weather} cityName={item} />
+                        return <CityWeather key={item} weatherData={weather} cityName={item} />
                     }))
                 )
                 break
             }
             default: {
                 if (!(value in locations)) {
+                    setCitiesHelper([<div>The city you selected could not be found</div>])
                     throw new Error("Not a valid city!")
                 }
                 set_location(
@@ -47,14 +67,15 @@ export default function Weather({ get_weather, set_location }) {
                     locations[value].lon
                 )
                 let weather = await get_weather()
-                setCities([<City key={value} weatherData={weather} />])
+                setCitiesHelper([<CityWeather key={value} weatherData={weather} cityName={value} />])
             }
         }
     }
     return (
         <div className="weather-view">
             <form>
-                <select id="citySelector" defaultValue={"DEFAULT"} onChange={(e) => cityComponents(e.target.value)}  className="dropdown">
+                {/* dropdown menu */}
+                <select id="citySelector" defaultValue={"DEFAULT"} onChange={(e) => cityComponents(e.target.value)} className="dropdown">
                     <option value="DEFAULT" disabled>Valitse kaupunki ...</option>
                     <option value="all"      >Kaikki kaupungit</option>
                     <option value="Tampere"  >Tampere</option>
@@ -63,9 +84,16 @@ export default function Weather({ get_weather, set_location }) {
                     <option value="Espoo"    >Espoo</option>
                 </select>
             </form>
-            <div className="city-container">
-                {cities}
-            </div>
+            {/* 
+            if we're waiting on our API request, display loading screen
+            Otherwise, display weather for cities
+             */}
+            {loading ?
+                <LoadingScreen /> :
+                <div className="city-container">
+                    {cities}
+                </div>
+            }
         </div>
     )
 }

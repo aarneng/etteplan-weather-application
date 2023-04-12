@@ -25,20 +25,18 @@
   --weather-width: 300px;
 }
 
+body {
+  font-family: 'Arial Regular', Arial;
+  margin: 0;
+  color: var(--font-color-dark);
+  background-color: var(--app-background-color);
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* * {
-  font-family: 'Arial Regular';
-} */
-
-body {
-  font-family: 'Arial Regular', Arial;
-  margin: 0;
-  color: var(--font-color-dark)
+  overflow-x: scroll;
 }
 
 .topbar {
@@ -48,6 +46,7 @@ body {
   overflow: hidden;
   width: 100%;
   top: 0;
+  z-index: 1; /*prevent images from going on top of the bar*/
 }
 
 .main {
@@ -136,17 +135,18 @@ h1 {
 .img-weather {
   height: 1.5em;
   vertical-align: middle;
+  filter: drop-shadow(0px 4px 4px #808080);
 }
 
 .time {
   text-align: left;
 }
 
-.time > .mm-dt {
+.mm-dd {
   font-size: var(--font-size-date);
 }
 
-.time > .hh-min {
+.hh-min {
   font-size: var(--font-size-time-now);
   color: var(--font-color-light)
 }
@@ -177,6 +177,7 @@ h1 {
   object-fit: contain;
   max-width: 100%;
   max-height: 100%;
+  filter: drop-shadow(0px 4px 4px #808080);
 }
 
 .future-time {
@@ -190,10 +191,67 @@ h1 {
 
 .future-top {
   background-color: var(--app-background-color);
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .future-bottom {
   background-color: var(--more-info-background-color);
   font-size: var(--font-size-weather-moreinfo-future);
-  color: var(--font-color-light)
+  color: var(--font-color-light);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/*
+
+.ip is for the loading screen
+Copied from Jon Kantner's codepen:
+https://codepen.io/jkantner/pen/mdKOpbe
+
+*/
+.ip {
+	width: 16em;
+	height: 8em;
+  padding-top: 100px;
+}
+.ip__track {
+	stroke: hsl(var(--hue),90%,90%);
+	transition: stroke var(--trans-dur);
+}
+.ip__worm1,
+.ip__worm2 {
+	animation: worm1 2s linear infinite;
+}
+.ip__worm2 {
+	animation-name: worm2;
+}
+
+/* Animation */
+@keyframes worm1 {
+	from {
+		stroke-dashoffset: 0;
+	}
+	50% {
+		animation-timing-function: steps(1);
+		stroke-dashoffset: -358;
+	}
+	50.01% {
+		animation-timing-function: linear;
+		stroke-dashoffset: 358;
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+@keyframes worm2 {
+	from {
+		stroke-dashoffset: 358;
+	}
+	50% {
+		stroke-dashoffset: 0;
+	}
+	to {
+		stroke-dashoffset: -358;
+	}
 }
