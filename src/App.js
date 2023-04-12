@@ -22,7 +22,7 @@ function App() {
                     <MainView
                         get_weather={
                             process.env.NODE_ENV === "development"
-                                ? weatherService.get_weather_fake
+                                ? weatherService.get_weather
                                 : weatherService.get_weather
                         }
                         set_location={weatherService.set_location}
